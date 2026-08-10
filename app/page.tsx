@@ -3,6 +3,7 @@ import Hero from "@/app/components/sections/Hero";
 import Stats from "@/app/components/sections/Stats";
 import HowItWorks from "@/app/components/sections/HowItWorks";
 import Opportunities from "./components/sections/Opportunities";
+import Benefits from "./components/sections/Benefits";
 import Link from "next/link";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
         <Stats />
         <HowItWorks />
         <Opportunities />
+        <Benefits />
 
         <section
           id="how-it-works"
