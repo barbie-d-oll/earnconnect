@@ -2,6 +2,7 @@ import Navbar from "@/app/components/layout/Navbar";
 import Hero from "@/app/components/sections/Hero";
 import Stats from "@/app/components/sections/Stats";
 import HowItWorks from "@/app/components/sections/HowItWorks";
+import Opportunities from "./components/sections/Opportunities";
 import Link from "next/link";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
         <Hero />
         <Stats />
         <HowItWorks />
+        <Opportunities />
 
         <section
           id="how-it-works"
