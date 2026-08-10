@@ -1,6 +1,7 @@
 import Navbar from "@/app/components/layout/Navbar";
 import Hero from "@/app/components/sections/Hero";
 import Stats from "@/app/components/sections/Stats";
+import HowItWorks from "@/app/components/sections/HowItWorks";
 import Link from "next/link";
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
       <main>
         <Hero />
         <Stats />
+        <HowItWorks />
 
         <section
           id="how-it-works"
