@@ -8,7 +8,9 @@ const adapter = new PrismaMariaDb({
   user: process.env.DATABASE_USER || "root",
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME || "earnconnect",
-  connectionLimit: 5,
+  connectionLimit: 1,
+  connectTimeout: 5000,
+
 });
 
 export const prisma = new PrismaClient({ adapter });
