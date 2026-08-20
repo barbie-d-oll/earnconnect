@@ -1,0 +1,89 @@
+import {
+  ShieldCheck,
+  Wallet,
+  SearchCheck,
+  Users,
+} from "lucide-react";
+
+const benefits = [
+  {
+    icon: SearchCheck,
+    title: "Opportunities that fit",
+    description:
+      "Discover tasks and opportunities based on your skills and interests.",
+  },
+  {
+    icon: Wallet,
+    title: "Secure earnings",
+    description:
+      "Track your earnings and manage your wallet from one convenient place.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Trusted platform",
+    description:
+      "Work with verified opportunities and keep your activity secure.",
+  },
+  {
+    icon: Users,
+    title: "One connected community",
+    description:
+      "Workers and employers can connect, collaborate, and grow together.",
+  },
+];
+
+export default function Benefits() {
+  return (
+    <section
+      id="benefits"
+      className="bg-[#F0F2F5] px-6 py-20 sm:px-8 lg:px-10 lg:py-24"
+    >
+      <div className="mx-auto max-w-7xl">
+        <div className="grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+          {/* Heading */}
+          <div>
+            <p className="text-sm font-bold uppercase tracking-wider text-[#1877F2]">
+              Why EarnConnect
+            </p>
+
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-[#050505] sm:text-4xl">
+              Everything you need to turn opportunities into income.
+            </h2>
+
+            <p className="mt-5 max-w-lg leading-7 text-[#65676B]">
+              EarnConnect gives workers and employers the tools they need to
+              discover opportunities, manage work, and build meaningful
+              connections.
+            </p>
+          </div>
+
+          {/* Benefits */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {benefits.map((benefit) => {
+              const Icon = benefit.icon;
+
+              return (
+                <div
+                  key={benefit.title}
+                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                >
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E7F3FF]">
+                    <Icon size={21} className="text-[#1877F2]" />
+                  </div>
+
+                  <h3 className="mt-5 font-bold text-[#050505]">
+                    {benefit.title}
+                  </h3>
+
+                  <p className="mt-2 text-sm leading-6 text-[#65676B]">
+                    {benefit.description}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
