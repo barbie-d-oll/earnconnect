@@ -25,7 +25,6 @@ export default function RegisterPage() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -40,7 +39,6 @@ export default function RegisterPage() {
     e.preventDefault();
 
     setError("");
-    setSuccess("");
 
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match.");
@@ -73,18 +71,10 @@ export default function RegisterPage() {
         return;
       }
 
-      setSuccess("Account created successfully!");
-
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
-
-      setTimeout(() => {
-        window.location.href = "/auth/login";
-      }, 1200);
+      window.location.href =
+        data.user.role === "EMPLOYER"
+          ? "/dashboard/employer"
+          : "/dashboard/worker";
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -121,13 +111,6 @@ export default function RegisterPage() {
               {error && (
                 <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
                   {error}
-                </div>
-              )}
-
-              {/* Success */}
-              {success && (
-                <div className="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-600">
-                  {success}
                 </div>
               )}
 

@@ -1,308 +1,481 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import {
-  Bell,
-  BriefcaseBusiness,
-  CheckCircle2,
-  ChevronRight,
-  CircleDollarSign,
-  ClipboardList,
-  LayoutDashboard,
-  LogOut,
-  Menu,
   Search,
-  Settings,
-  UserRound,
+  MapPin,
+  Clock,
+  Wallet,
+  Bookmark,
+  BookmarkCheck,
+  CheckCircle2,
+  Briefcase,
+  ChevronRight,
   X,
 } from "lucide-react";
-import { useState } from "react";
 
-const opportunities = [
+type TaskStatus = "AVAILABLE" | "APPLIED" | "ACTIVE" | "COMPLETED";
+
+type Task = {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  location: string;
+  payment: number;
+  deadline: string;
+  employer: string;
+  status: TaskStatus;
+};
+
+const initialTasks: Task[] = [
   {
-    title: "Event Assistant",
-    company: "Kumasi Events Hub",
+    id: 1,
+    title: "Help move office furniture",
+    description:
+      "We need someone to help move desks, chairs and office equipment to a new location.",
+    category: "Moving",
     location: "Kumasi",
-    type: "Part-time",
-    payment: "GHS 150",
-    description:
-      "Help with guest registration and event coordination at a weekend event.",
+    payment: 150,
+    deadline: "Tomorrow",
+    employer: "Bright Office Ltd",
+    status: "AVAILABLE",
   },
   {
-    title: "Social Media Assistant",
-    company: "Local Business",
+    id: 2,
+    title: "Social media assistant",
+    description:
+      "Help create and schedule social media posts for a small local business.",
+    category: "Digital",
     location: "Remote",
-    type: "Flexible",
-    payment: "GHS 300",
-    description:
-      "Create and schedule social media content for a growing local business.",
+    payment: 250,
+    deadline: "3 days",
+    employer: "Nova Media",
+    status: "AVAILABLE",
   },
   {
-    title: "Delivery Assistant",
-    company: "QuickServe",
-    location: "Accra",
-    type: "Short-term",
-    payment: "GHS 200",
+    id: 3,
+    title: "House cleaning",
     description:
-      "Assist with deliveries and customer coordination during the weekend.",
+      "General cleaning of a three-bedroom house. Cleaning materials will be provided.",
+    category: "Cleaning",
+    location: "Ejisu",
+    payment: 180,
+    deadline: "Saturday",
+    employer: "Private Client",
+    status: "AVAILABLE",
+  },
+  {
+    id: 4,
+    title: "Event setup assistant",
+    description:
+      "Assist with setting up chairs, tables and decorations for a weekend event.",
+    category: "Events",
+    location: "Santasi",
+    payment: 200,
+    deadline: "Friday",
+    employer: "Golden Events",
+    status: "AVAILABLE",
   },
 ];
 
+const categories = [
+  "All",
+  "Moving",
+  "Digital",
+  "Cleaning",
+  "Events",
+];
+
 export default function WorkerDashboard() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [tasks, setTasks] = useState(initialTasks);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("All");
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [savedTasks, setSavedTasks] = useState<number[]>([]);
+
+  const filteredTasks = useMemo(() => {
+    return tasks.filter((task) => {
+      const matchesSearch =
+        task.title.toLowerCase().includes(search.toLowerCase()) ||
+        task.description.toLowerCase().includes(search.toLowerCase()) ||
+        task.location.toLowerCase().includes(search.toLowerCase());
+
+      const matchesCategory =
+        category === "All" || task.category === category;
+
+      return matchesSearch && matchesCategory;
+    });
+  }, [tasks, search, category]);
+
+  const availableTasks = filteredTasks.filter(
+    (task) => task.status === "AVAILABLE"
+  );
+
+  const appliedTasks = tasks.filter(
+    (task) => task.status === "APPLIED"
+  );
+
+  const toggleSave = (taskId: number) => {
+    setSavedTasks((current) =>
+      current.includes(taskId)
+        ? current.filter((id) => id !== taskId)
+        : [...current, taskId]
+    );
+  };
+
+  const applyForTask = (taskId: number) => {
+    setTasks((current) =>
+      current.map((task) =>
+        task.id === taskId
+          ? { ...task, status: "APPLIED" }
+          : task
+      )
+    );
+
+    setSelectedTask(null);
+  };
+
+  const cancelApplication = (taskId: number) => {
+    setTasks((current) =>
+      current.map((task) =>
+        task.id === taskId
+          ? { ...task, status: "AVAILABLE" }
+          : task
+      )
+    );
+  };
 
   return (
-    <main className="min-h-screen bg-[#F5F7FA] text-[#050505]">
-      {/* Mobile Header */}
-      <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-5 lg:hidden">
-        <Link href="/" className="text-xl font-black">
-          <span className="text-[#1877F2]">Earn</span>
-          <span>Connect</span>
-        </Link>
-
-        <button
-          onClick={() => setSidebarOpen(true)}
-          className="rounded-lg p-2 text-[#050505] hover:bg-slate-100"
-          aria-label="Open menu"
-        >
-          <Menu size={22} />
-        </button>
-      </header>
-
-      {/* Mobile Overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/30 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      {/* Sidebar */}
-      <aside
-        className={`fixed left-0 top-0 z-50 flex h-screen w-64 flex-col border-r border-slate-200 bg-white transition-transform duration-300 ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0`}
+<main className="min-h-screen bg-[#F0F2F5] text-[#050505]">
+  <header className="border-b border-slate-200 bg-white">
+    <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6">
+      
+      <Link
+        href="/"
+        className="text-xl font-black tracking-tight sm:text-2xl"
       >
-        <div className="flex h-20 items-center justify-between border-b border-slate-100 px-6">
-          <Link href="/" className="text-2xl font-black">
-            <span className="text-[#1877F2]">Earn</span>
-            <span>Connect</span>
-          </Link>
+        <span className="text-[#1877F2]">Earn</span>
+        <span>Connect</span>
+      </Link>
 
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 lg:hidden"
-            aria-label="Close menu"
-          >
-            <X size={20} />
-          </button>
-        </div>
-
-        <div className="flex-1 px-4 py-6">
-          <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-[#8A8D91]">
-            Workspace
+      <div className="flex items-center gap-3">
+        <div className="hidden text-right sm:block">
+          <p className="text-sm font-semibold text-[#050505]">
+            Barbara
           </p>
-
-          <nav className="space-y-1">
-            <SidebarLink
-              icon={<LayoutDashboard size={19} />}
-              label="Dashboard"
-              active
-            />
-
-            <SidebarLink
-              icon={<Search size={19} />}
-              label="Find Opportunities"
-            />
-
-            <SidebarLink
-              icon={<ClipboardList size={19} />}
-              label="My Tasks"
-            />
-
-            <SidebarLink
-              icon={<CircleDollarSign size={19} />}
-              label="Earnings"
-            />
-
-            <SidebarLink
-              icon={<UserRound size={19} />}
-              label="Profile"
-            />
-          </nav>
+          <p className="text-xs text-[#65676B]">
+            Worker
+          </p>
         </div>
 
-        <div className="border-t border-slate-100 p-4">
-          <SidebarLink
-            icon={<Settings size={19} />}
-            label="Settings"
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1877F2] text-sm font-bold text-white">
+          B
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+      <div className="mx-auto max-w-7xl px-6 py-8">
+
+        {/* Welcome */}
+
+       <section className="mb-8">
+  <p className="mb-2 text-xs font-bold uppercase tracking-wider text-[#1877F2]">
+    Worker dashboard
+  </p>
+
+  <h1 className="text-3xl font-bold tracking-tight text-[#050505] sm:text-4xl">
+    Find work. Earn money.
+  </h1>
+
+  <p className="mt-3 max-w-xl text-sm leading-6 text-[#65676B] sm:text-base">
+    Browse available tasks, find opportunities that match your skills,
+    and manage your work from one place.
+  </p>
+</section>
+        {/* Stats */}
+        <section className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <StatCard
+            icon={<Briefcase size={20} />}
+            label="Available Tasks"
+            value={String(availableTasks.length)}
           />
 
-          <button className="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-600 transition hover:bg-red-50 hover:text-red-600">
-            <LogOut size={19} />
-            Log out
-          </button>
-        </div>
-      </aside>
+          <StatCard
+            icon={<Clock size={20} />}
+            label="Applications"
+            value={String(appliedTasks.length)}
+          />
 
-      {/* Main Content */}
-      <div className="lg:pl-64">
-        {/* Desktop Topbar */}
-        <header className="hidden h-20 items-center justify-between border-b border-slate-200 bg-white px-8 lg:flex xl:px-10">
-          <div>
-            <p className="text-sm text-[#65676B]">Worker Workspace</p>
-            <h2 className="text-lg font-bold">Dashboard</h2>
-          </div>
+          <StatCard
+            icon={<Wallet size={20} />}
+            label="Total Earnings"
+            value="GH₵ 0"
+          />
 
-          <div className="flex items-center gap-5">
-            <button
-              className="relative rounded-xl p-2.5 text-[#65676B] transition hover:bg-slate-100"
-              aria-label="Notifications"
-            >
-              <Bell size={21} />
+          <StatCard
+            icon={<CheckCircle2 size={20} />}
+            label="Completed"
+            value="0"
+          />
+        </section>
 
-              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[#1877F2]" />
-            </button>
+        {/* Search + Filter */}
+        <section className="mb-6 border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="flex flex-col gap-4 lg:flex-row">
+            <div className="relative flex-1">
+              <Search
+                size={20}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+              />
 
-            <div className="flex items-center gap-3 border-l border-slate-200 pl-5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#E7F3FF] font-bold text-[#1877F2]">
-                T
-              </div>
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search for tasks..."
+                className="w-full rounded-xl border border-slate-200 bg-[#F7F8FA] py-3 pl-12 pr-4 text-sm outline-none transition focus:border-[#1877F2] focus:ring-2 focus:ring-[#1877F2]/10"
+              />
+            </div>
 
-              <div>
-                <p className="text-sm font-semibold">Test User</p>
-                <p className="text-xs text-[#65676B]">Worker</p>
-              </div>
+            <div className="flex gap-2 overflow-x-auto">
+              {categories.map((item) => (
+                <button
+                  key={item}
+                  onClick={() => setCategory(item)}
+                  className={`whitespace-nowrap rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                    category === item
+                      ? "bg-[#1877F2] text-white"
+                      : "bg-[#F0F2F5] text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  {item}
+                </button>
+              ))}
             </div>
           </div>
-        </header>
+        </section>
 
-        <div className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
-          {/* Welcome */}
+        {/* Applications */}
+        {appliedTasks.length > 0 && (
           <section className="mb-8">
-            <p className="text-sm font-medium text-[#1877F2]">
-              Welcome back 👋
-            </p>
-
-            <h1 className="mt-1 text-3xl font-black tracking-tight sm:text-4xl">
-              Find your next opportunity.
-            </h1>
-
-            <p className="mt-2 max-w-2xl text-[#65676B]">
-              Discover tasks that match your skills, complete them, and get
-              paid securely through EarnConnect.
-            </p>
-          </section>
-
-          {/* Stats */}
-          <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            <StatCard
-              icon={<Search size={20} />}
-              label="Available Tasks"
-              value="12"
-              description="New opportunities"
-            />
-
-            <StatCard
-              icon={<ClipboardList size={20} />}
-              label="Active Tasks"
-              value="3"
-              description="Currently working"
-            />
-
-            <StatCard
-              icon={<CheckCircle2 size={20} />}
-              label="Completed"
-              value="18"
-              description="Tasks completed"
-            />
-
-            <StatCard
-              icon={<CircleDollarSign size={20} />}
-              label="Total Earnings"
-              value="GHS 2,450"
-              description="All-time earnings"
-            />
-          </section>
-
-          {/* Opportunities */}
-          <section className="mt-10">
-            <div className="flex items-end justify-between">
-              <div>
-                <h2 className="text-2xl font-bold">
-                  Available opportunities
-                </h2>
-
-                <p className="mt-1 text-sm text-[#65676B]">
-                  Find work that fits your skills and schedule.
-                </p>
-              </div>
-
-              <button className="hidden items-center gap-1 text-sm font-semibold text-[#1877F2] sm:flex">
-                View all
-                <ChevronRight size={17} />
-              </button>
+            <div className="mb-4">
+              <h2 className="text-xl font-bold">My Applications</h2>
+              <p className="text-sm text-slate-500">
+                Tasks you have applied for.
+              </p>
             </div>
 
-            <div className="mt-5 grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
-              {opportunities.map((opportunity) => (
-                <OpportunityCard
-                  key={opportunity.title}
-                  {...opportunity}
-                />
+            <div className="grid gap-4 md:grid-cols-2">
+              {appliedTasks.map((task) => (
+                <div
+                  key={task.id}
+                  className="border border-slate-200 bg-white p-5 shadow-sm"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="mb-1 text-xs font-semibold uppercase text-[#1877F2]">
+                        Application submitted
+                      </p>
+
+                      <h3 className="font-bold">{task.title}</h3>
+
+                      <p className="mt-2 text-sm text-slate-600">
+                        {task.employer}
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => cancelApplication(task.id)}
+                      className="rounded-lg px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-100"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
               ))}
             </div>
           </section>
+        )}
 
-          {/* Quick Action */}
-          <section className="mt-10 rounded-2xl border border-[#DCEBFA] bg-[#E7F3FF] p-6 sm:p-7">
-            <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
+        {/* Available Tasks */}
+        <section>
+          <div className="mb-4 flex items-end justify-between">
+            <div>
+              <h2 className="text-xl font-bold">Available Tasks</h2>
+              <p className="text-sm text-slate-500">
+                Find an opportunity that matches your skills.
+              </p>
+            </div>
+
+            <span className="text-sm font-medium text-slate-500">
+              {availableTasks.length} found
+            </span>
+          </div>
+
+          {availableTasks.length === 0 ? (
+            <div className="border border-slate-200 bg-white p-12 text-center shadow-sm">
+              <Search className="mx-auto mb-3 text-slate-400" size={32} />
+
+              <h3 className="font-bold">No tasks found</h3>
+
+              <p className="mt-1 text-sm text-slate-500">
+                Try changing your search or category.
+              </p>
+
+              <button
+                onClick={() => {
+                  setSearch("");
+                  setCategory("All");
+                }}
+                className="mt-4 rounded-xl bg-[#1877F2] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#166FE5]"
+              >
+                Clear filters
+              </button>
+            </div>
+          ) : (
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {availableTasks.map((task) => (
+                <article
+                  key={task.id}
+                  className="group flex flex-col border border-slate-200 bg-white p-5 shadow-sm transition hover:border-[#1877F2]/30"
+                >
+                  <div className="mb-4 flex items-start justify-between">
+                    <span className="rounded-md bg-[#E7F3FF] px-3 py-1 text-xs font-semibold text-[#1877F2]">
+                      {task.category}
+                    </span>
+
+                    <button
+                      onClick={() => toggleSave(task.id)}
+                      className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-[#1877F2]"
+                      aria-label="Save task"
+                    >
+                      {savedTasks.includes(task.id) ? (
+                        <BookmarkCheck size={20} />
+                      ) : (
+                        <Bookmark size={20} />
+                      )}
+                    </button>
+                  </div>
+
+                  <h3 className="text-lg font-bold">{task.title}</h3>
+
+                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">
+                    {task.description}
+                  </p>
+
+                  <div className="mt-5 space-y-2 text-sm text-slate-500">
+                    <div className="flex items-center gap-2">
+                      <MapPin size={16} />
+                      {task.location}
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Clock size={16} />
+                      Deadline: {task.deadline}
+                    </div>
+                  </div>
+
+                  <div className="mt-5 border-t border-slate-100 pt-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-xs text-slate-500">Payment</p>
+                        <p className="text-lg font-bold text-[#1877F2]">
+                          GH₵ {task.payment}
+                        </p>
+                      </div>
+
+                      <button
+                        onClick={() => setSelectedTask(task)}
+                        className="flex items-center gap-1 rounded-xl bg-[#1877F2] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#166FE5]"
+                      >
+                        View task
+                        <ChevronRight size={16} />
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
+
+      {/* Task Details Modal */}
+      {selectedTask && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white shadow-xl">
+            <div className="flex items-center justify-between border-b border-slate-200 p-5">
               <div>
-                <p className="text-sm font-semibold text-[#1877F2]">
-                  Ready to earn?
+                <p className="text-xs font-semibold uppercase text-[#1877F2]">
+                  Task details
                 </p>
 
                 <h2 className="mt-1 text-xl font-bold">
-                  Find an opportunity that works for you.
+                  {selectedTask.title}
                 </h2>
+              </div>
 
-                <p className="mt-1 text-sm text-[#65676B]">
-                  Browse available tasks and start building your earnings.
+              <button
+                onClick={() => setSelectedTask(null)}
+                className="rounded-lg p-2 text-slate-500 hover:bg-slate-100"
+                aria-label="Close"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="space-y-5 p-5">
+              <div>
+                <p className="text-sm font-semibold">Description</p>
+
+                <p className="mt-2 text-sm leading-6 text-slate-600">
+                  {selectedTask.description}
                 </p>
               </div>
 
-              <button className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#1877F2] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#166FE5]">
-                <Search size={18} />
-                Find Opportunities
+              <div className="grid grid-cols-2 gap-4">
+                <Detail
+                  label="Payment"
+                  value={`GH₵ ${selectedTask.payment}`}
+                />
+
+                <Detail
+                  label="Category"
+                  value={selectedTask.category}
+                />
+
+                <Detail
+                  label="Location"
+                  value={selectedTask.location}
+                />
+
+                <Detail
+                  label="Deadline"
+                  value={selectedTask.deadline}
+                />
+              </div>
+
+              <div className="border border-slate-200 bg-[#F7F8FA] p-4">
+                <p className="text-xs text-slate-500">Employer</p>
+                <p className="mt-1 font-semibold">
+                  {selectedTask.employer}
+                </p>
+              </div>
+
+              <button
+                onClick={() => applyForTask(selectedTask.id)}
+                className="w-full rounded-xl bg-[#1877F2] px-4 py-3.5 font-semibold text-white transition hover:bg-[#166FE5]"
+              >
+                Apply for this task
               </button>
             </div>
-          </section>
+          </div>
         </div>
-      </div>
+      )}
     </main>
-  );
-}
-
-function SidebarLink({
-  icon,
-  label,
-  active = false,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  active?: boolean;
-}) {
-  return (
-    <button
-      className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition ${
-        active
-          ? "bg-[#E7F3FF] text-[#1877F2]"
-          : "text-slate-600 hover:bg-slate-100 hover:text-[#050505]"
-      }`}
-    >
-      {icon}
-      {label}
-    </button>
   );
 }
 
@@ -310,85 +483,35 @@ function StatCard({
   icon,
   label,
   value,
-  description,
 }: {
   icon: React.ReactNode;
   label: string;
   value: string;
-  description: string;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex items-center justify-between">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E7F3FF] text-[#1877F2]">
-          {icon}
-        </div>
-
-        <span className="text-xs font-medium text-green-600">
-          +12%
-        </span>
+    <div className="border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-lg bg-[#E7F3FF] text-[#1877F2]">
+        {icon}
       </div>
 
-      <p className="mt-5 text-sm text-[#65676B]">{label}</p>
+      <p className="text-sm text-slate-500">{label}</p>
 
-      <p className="mt-1 text-2xl font-black">{value}</p>
-
-      <p className="mt-1 text-xs text-[#8A8D91]">{description}</p>
+      <p className="mt-1 text-2xl font-bold">{value}</p>
     </div>
   );
 }
 
-function OpportunityCard({
-  title,
-  company,
-  location,
-  type,
-  payment,
-  description,
+function Detail({
+  label,
+  value,
 }: {
-  title: string;
-  company: string;
-  location: string;
-  type: string;
-  payment: string;
-  description: string;
+  label: string;
+  value: string;
 }) {
   return (
-    <article className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E7F3FF] text-[#1877F2]">
-          <BriefcaseBusiness size={21} />
-        </div>
-
-        <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
-          {payment}
-        </span>
-      </div>
-
-      <h3 className="mt-5 text-lg font-bold">{title}</h3>
-
-      <p className="mt-1 text-sm font-medium text-[#65676B]">
-        {company}
-      </p>
-
-      <p className="mt-4 flex-1 text-sm leading-6 text-[#65676B]">
-        {description}
-      </p>
-
-      <div className="mt-5 flex flex-wrap gap-2">
-        <span className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-600">
-          {location}
-        </span>
-
-        <span className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-600">
-          {type}
-        </span>
-      </div>
-
-      <button className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-[#1877F2] px-4 py-3 text-sm font-semibold text-[#1877F2] transition hover:bg-[#1877F2] hover:text-white">
-        View Opportunity
-        <ChevronRight size={17} />
-      </button>
-    </article>
+    <div className="border border-slate-200 bg-white p-3">
+      <p className="text-xs text-slate-500">{label}</p>
+      <p className="mt-1 text-sm font-semibold">{value}</p>
+    </div>
   );
 }

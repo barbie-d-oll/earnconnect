@@ -7,7 +7,18 @@ datasource db {
   provider = "mysql"
 }
 
-enum UserRole {
+model User {
+  id           String     @id @default(cuid())
+  name         String
+  email        String     @unique
+  passwordHash String
+  role         Role
+  status       UserStatus @default(ACTIVE)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+enum Role {
   WORKER
   EMPLOYER
   ADMIN
@@ -16,15 +27,4 @@ enum UserRole {
 enum UserStatus {
   ACTIVE
   SUSPENDED
-}
-
-model User {
-  id           String     @id @default(cuid())
-  name         String
-  email        String     @unique
-  passwordHash String
-  role         UserRole
-  status       UserStatus @default(ACTIVE)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
 }

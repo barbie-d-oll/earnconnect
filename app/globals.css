@@ -2,14 +2,14 @@
 
 :root {
   --primary: #1877f2;
-  --primary-hover: #166fe5;
-  --primary-light: #e7f3ff;
+  --primary-hover: #166fE5;
+  --primary-light: #E7F3FF;
 
-  --background: #f0f2f5;
-  --surface: #ffffff;
+  --background: #F0F2F5;
+  --surface: #FFFFFF;
 
   --foreground: #050505;
-  --muted: #65676b;
+  --muted: #65676B;
 
   --success: #31a24c;
   --warning: #f7b928;

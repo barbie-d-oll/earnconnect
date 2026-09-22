@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/app/lib/prisma";
+import { getSession } from "@/app/lib/session";
 
 export async function POST(request: Request) {
   try {
@@ -68,6 +69,12 @@ export async function POST(request: Request) {
         role,
       },
     });
+
+    const session = await getSession();
+    session.userId = user.id;
+    session.role = user.role;
+    session.isLoggedIn = true;
+    await session.save();
 
     return NextResponse.json(
       {

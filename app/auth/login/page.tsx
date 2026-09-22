@@ -1,7 +1,8 @@
+/* eslint-disable @next/next/no-location-assign-relative-destination */
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
 type UserRole = "WORKER" | "EMPLOYER" | "ADMIN";
@@ -17,7 +18,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -26,7 +27,7 @@ export default function LoginPage() {
     setError("");
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setError("");
@@ -51,6 +52,7 @@ export default function LoginPage() {
       const role: UserRole = data.user.role;
 
       if (role === "WORKER") {
+        // eslint-disable-next-line @next/next/no-location-assign-relative-destination
         window.location.href = "/dashboard/worker";
       } else if (role === "EMPLOYER") {
         window.location.href = "/dashboard/employer";
@@ -152,7 +154,7 @@ export default function LoginPage() {
 
                   <button
                     type="button"
-                    onClick={() => setShowPassword((current) => !current)}
+                    onClick={() => setShowPassword((current: boolean) => !current)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1.5 text-[#65676B] transition hover:bg-[#F0F2F5] hover:text-[#1877F2]"
                     aria-label={
                       showPassword ? "Hide password" : "Show password"
@@ -179,7 +181,7 @@ export default function LoginPage() {
 
             {/* Register */}
             <p className="mt-6 text-center text-sm text-[#65676B]">
-              Don&t have an account?{" "}
+              Don't have an account?{" "}
               <Link
                 href="/auth/register"
                 className="font-semibold text-[#1877F2] hover:underline"

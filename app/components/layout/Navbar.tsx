@@ -7,7 +7,6 @@ import { useState } from "react";
 const links = [
   { label: "How It Works", href: "#how-it-works" },
   { label: "Opportunities", href: "#opportunities" },
-  // { label: "Benefits", href: "#benefits" },
 ];
 
 export default function Navbar() {
@@ -16,9 +15,12 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
       <nav className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-10">
-        
+
         {/* Logo */}
-        <Link href="/" className="text-2xl font-extrabold tracking-tight">
+        <Link
+          href="/auth/login"
+          className="text-2xl font-extrabold tracking-tight"
+        >
           <span className="text-[#1877F2]">Earn</span>
           <span className="text-[#050505]">Connect</span>
         </Link>
@@ -39,14 +41,14 @@ export default function Navbar() {
         {/* Desktop actions */}
         <div className="hidden items-center gap-3 lg:flex">
           <Link
-            href="/login"
+            href="/auth/login"
             className="rounded-lg px-5 py-2.5 text-sm font-semibold text-[#1877F2] transition hover:bg-[#E7F3FF]"
           >
             Log In
           </Link>
 
           <Link
-            href="/register"
+            href="/auth/register"
             className="rounded-lg bg-[#1877F2] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#166FE5]"
           >
             Get Started
@@ -81,7 +83,7 @@ export default function Navbar() {
 
             <div className="mt-3 flex flex-col gap-2 border-t border-slate-200 pt-4">
               <Link
-                href="/login"
+                href="/auth/login"
                 onClick={() => setOpen(false)}
                 className="rounded-lg px-4 py-3 text-center text-sm font-semibold text-[#1877F2] hover:bg-[#E7F3FF]"
               >
@@ -89,7 +91,7 @@ export default function Navbar() {
               </Link>
 
               <Link
-                href="/register"
+                href="/auth/register"
                 onClick={() => setOpen(false)}
                 className="rounded-lg bg-[#1877F2] px-4 py-3 text-center text-sm font-semibold text-white hover:bg-[#166FE5]"
               >
