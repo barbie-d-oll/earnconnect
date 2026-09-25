@@ -2,7 +2,7 @@ import {
   UserPlus,
   Search,
   Wallet,
-  ArrowRight,
+  ArrowUpRight,
 } from "lucide-react";
 
 const steps = [
@@ -33,63 +33,67 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="bg-[#F0F2F5] px-6 py-20 sm:px-8 lg:px-10 lg:py-24"
+      className="border-b border-slate-200 bg-white px-6 py-20 sm:px-8 lg:px-10 lg:py-24"
     >
       <div className="mx-auto max-w-7xl">
+
         {/* Heading */}
-        <div className="max-w-2xl">
-          <p className="text-sm font-bold uppercase tracking-wider text-[#1877F2]">
-            Simple process
-          </p>
+        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <div>
+            <p className="text-sm font-semibold text-[#1877F2]">
+              How it works
+            </p>
 
-          <h2 className="mt-3 text-3xl font-black tracking-tight text-[#050505] sm:text-4xl">
-            How EarnConnect works
-          </h2>
+            <h2 className="mt-3 max-w-xl text-3xl font-bold leading-tight tracking-tight text-[#050505] sm:text-4xl">
+              From finding a task to getting the work done.
+            </h2>
+          </div>
 
-          <p className="mt-4 text-lg leading-7 text-[#65676B]">
-            Getting started is simple. Create your account, discover the
-            right opportunities, and start earning.
+          <p className="max-w-xl text-base leading-7 text-[#65676B] lg:justify-self-end">
+            EarnConnect keeps the process straightforward. Create your
+            account, discover an opportunity, complete the work, and build
+            your earning history.
           </p>
         </div>
 
         {/* Steps */}
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {steps.map((step, index) => {
+        <div className="mt-14 border-t border-slate-200">
+          {steps.map((step) => {
             const Icon = step.icon;
 
             return (
               <div
                 key={step.number}
-                className="relative rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                className="grid gap-6 border-b border-slate-200 py-8 md:grid-cols-[80px_220px_1fr_auto] md:items-center md:gap-8"
               >
                 {/* Number */}
-                <div className="flex items-center justify-between">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#E7F3FF]">
-                    <Icon size={22} className="text-[#1877F2]" />
-                  </div>
+                <span className="text-sm font-semibold text-[#1877F2]">
+                  {step.number}
+                </span>
 
-                  <span className="text-sm font-black text-slate-300">
-                    {step.number}
-                  </span>
+                {/* Icon + title */}
+                <div className="flex items-center gap-4">
+                  <Icon
+                    size={21}
+                    strokeWidth={1.8}
+                    className="shrink-0 text-[#1877F2]"
+                  />
+
+                  <h3 className="text-lg font-semibold text-[#050505]">
+                    {step.title}
+                  </h3>
                 </div>
 
-                <h3 className="mt-6 text-xl font-bold text-[#050505]">
-                  {step.title}
-                </h3>
-
-                <p className="mt-3 leading-6 text-[#65676B]">
+                {/* Description */}
+                <p className="max-w-xl text-sm leading-6 text-[#65676B]">
                   {step.description}
                 </p>
 
-                {/* Connector */}
-                {index < steps.length - 1 && (
-                  <div className="absolute -right-4 top-1/2 z-10 hidden -translate-y-1/2 md:block">
-                    <ArrowRight
-                      size={20}
-                      className="text-slate-300"
-                    />
-                  </div>
-                )}
+                {/* Small visual detail */}
+                <ArrowUpRight
+                  size={19}
+                  className="hidden text-slate-300 md:block"
+                />
               </div>
             );
           })}

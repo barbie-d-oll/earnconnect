@@ -428,9 +428,9 @@ export default function EmployerDashboard() {
 
               <Link
                 href="/dashboard/employer/tasks/create"
-                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-slate-100"
+                className="inline-flex items-center justify-center bg-[#1877F2] px-6 py-3 font-semibold text-white transition  hover:bg-[#166FE5] "
               >
-                <Plus size={18} />
+                {/* <Plus size={18} /> */}
                 Post a Task
               </Link>
             </div>

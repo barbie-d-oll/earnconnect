@@ -53,6 +53,7 @@ export default function LoginPage() {
 
       if (role === "WORKER") {
         // eslint-disable-next-line @next/next/no-location-assign-relative-destination
+        
         window.location.href = "/dashboard/worker";
       } else if (role === "EMPLOYER") {
         window.location.href = "/dashboard/employer";

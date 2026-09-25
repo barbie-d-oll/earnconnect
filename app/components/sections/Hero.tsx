@@ -3,209 +3,251 @@ import {
   ArrowUpRight,
   BriefcaseBusiness,
   CheckCircle2,
+  MapPin,
   Wallet,
 } from "lucide-react";
 
 export default function Hero() {
+  const tasks = [
+    {
+      title: "Social Media Promotion",
+      category: "Marketing",
+      location: "Remote",
+      amount: "GH₵50",
+    },
+    {
+      title: "Website Testing",
+      category: "Technology",
+      location: "Remote",
+      amount: "GH₵80",
+    },
+    {
+      title: "Content Review",
+      category: "Writing",
+      location: "Accra",
+      amount: "GH₵35",
+    },
+  ];
+
   return (
-    <section className="relative overflow-hidden bg-[#F0F2F5]">
-      {/* Background decoration */}
-      <div className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-[#E7F3FF]" />
+    <section className="relative overflow-hidden border-b border-slate-200 bg-[#F0F2F5]">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
+        <div className="grid min-h-[calc(100vh-68px)] items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 lg:py-20">
 
-      <div className="pointer-events-none absolute -bottom-48 left-1/3 h-[400px] w-[400px] rounded-full bg-blue-100/50 blur-3xl" />
-
-      <div className="relative mx-auto grid min-h-[calc(100vh-80px)] w-full max-w-7xl items-center gap-14 px-6 py-16 sm:px-8 lg:grid-cols-2 lg:px-10 lg:py-20">
-        
-        {/* LEFT */}
-        <div>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#E7F3FF] px-4 py-2 text-sm font-semibold text-[#1877F2]">
-            <span className="h-2 w-2 rounded-full bg-[#1877F2]" />
-            Your skills. Your opportunities. Your income.
-          </div>
-
-          <h1 className="max-w-2xl text-5xl font-black leading-[1.05] tracking-tight text-[#050505] sm:text-6xl lg:text-7xl">
-            Find opportunities.
-            <br />
-            <span className="text-[#1877F2]">Connect.</span> Earn.
-          </h1>
-
-          <p className="mt-7 max-w-xl text-lg leading-8 text-[#65676B] sm:text-xl">
-            Discover tasks, connect with opportunities, and turn your skills
-            into income. EarnConnect brings workers and employers together in
-            one simple platform.
-          </p>
-
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/register"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#1877F2] px-7 py-3.5 font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-[#166FE5]"
-            >
-              Get Started
-              <ArrowUpRight size={18} />
-            </Link>
-
-            <Link
-              href="#how-it-works"
-              className="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-7 py-3.5 font-semibold text-[#050505] transition hover:border-[#1877F2] hover:bg-[#E7F3FF]"
-            >
-              See How It Works
-            </Link>
-          </div>
-
-          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-[#65676B]">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={17} className="text-[#31A24C]" />
-              Verified opportunities
+          {/* LEFT */}
+          <div className="max-w-2xl">
+            <div className="mb-7 flex items-center gap-3 text-sm font-semibold text-[#1877F2]">
+              <span className="h-px w-8 bg-[#1877F2]" />
+              A task marketplace for workers and employers
             </div>
 
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={17} className="text-[#31A24C]" />
-              Secure payments
+            <h1 className="font-serif text-5xl font-bold leading-[1.08] tracking-[-0.025em] text-[#050505] sm:text-6xl lg:text-[68px]">
+  Find work.
+  <br />
+  <span className="text-[#1877F2]">
+    Connect with opportunity.
+  </span>
+</h1>
+
+            <p className="mt-7 max-w-xl text-base leading-7 text-[#65676B] sm:text-lg">
+              EarnConnect gives workers a place to discover task based
+              opportunities and gives employers a simple way to find people
+              who can get the work done.
+            </p>
+
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/auth/register"
+                className="group inline-flex items-center justify-center gap-2 bg-[#1877F2] px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#166FE5]"
+              >
+                Create an account
+                <ArrowUpRight
+                  size={18}
+                  className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </Link>
+
+              <Link
+                href="#how-it-works"
+                className="inline-flex items-center justify-center border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-[#050505] transition-colors hover:border-[#1877F2] hover:text-[#1877F2]"
+              >
+                See how it works
+              </Link>
             </div>
-          </div>
-        </div>
 
-        {/* RIGHT — PRODUCT PREVIEW */}
-        <div className="relative mx-auto w-full max-w-xl">
-          {/* Floating stat */}
-          <div className="absolute -left-5 top-10 z-10 hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-xl sm:block">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E7F3FF]">
-                <BriefcaseBusiness size={19} className="text-[#1877F2]" />
-              </div>
+            <div className="mt-9 grid max-w-lg gap-4 border-t border-slate-200 pt-6 sm:grid-cols-2">
+              <div className="flex items-start gap-3">
+                <BriefcaseBusiness
+                  size={18}
+                  className="mt-0.5 shrink-0 text-[#1877F2]"
+                />
 
-              <div>
-                <p className="text-xs text-[#65676B]">Available tasks</p>
-                <p className="font-bold text-[#050505]">500+</p>
-              </div>
-            </div>
-          </div>
+                <div>
+                  <p className="text-sm font-semibold text-[#050505]">
+                    For workers
+                  </p>
 
-          {/* Main dashboard card */}
-          <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.25)] sm:p-7">
-            
-            {/* Card header */}
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm font-medium text-[#65676B]">
-                  Wallet Balance
-                </p>
-
-                <div className="mt-2 flex items-center gap-3">
-                  <h2 className="text-4xl font-black tracking-tight text-[#050505]">
-                    GH₵2,480
-                  </h2>
-
-                  <span className="rounded-full bg-green-50 px-2.5 py-1 text-xs font-bold text-[#31A24C]">
-                    +18.6%
-                  </span>
+                  <p className="mt-1 text-sm leading-6 text-[#65676B]">
+                    Find tasks that match your skills.
+                  </p>
                 </div>
               </div>
 
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#E7F3FF]">
-                <Wallet size={22} className="text-[#1877F2]" />
-              </div>
-            </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle2
+                  size={18}
+                  className="mt-0.5 shrink-0 text-[#1877F2]"
+                />
 
-            {/* Mini chart */}
-            <div className="mt-7 rounded-2xl bg-[#F0F2F5] p-5">
-              <div className="flex items-center justify-between">
-                <p className="text-sm font-semibold text-[#050505]">
-                  Earnings overview
-                </p>
+                <div>
+                  <p className="text-sm font-semibold text-[#050505]">
+                    For employers
+                  </p>
 
-                <span className="text-xs text-[#65676B]">
-                  This month
-                </span>
-              </div>
-
-              <div className="mt-5 flex h-28 items-end gap-2">
-                {[35, 48, 42, 58, 52, 68, 61, 79, 72, 90].map(
-                  (height, index) => (
-                    <div
-                      key={index}
-                      className="flex-1 rounded-t-md bg-[#1877F2]"
-                      style={{ height: `${height}%` }}
-                    />
-                  )
-                )}
-              </div>
-            </div>
-
-            {/* Tasks */}
-            <div className="mt-7">
-              <div className="mb-4 flex items-center justify-between">
-                <h3 className="font-bold text-[#050505]">
-                  Recommended tasks
-                </h3>
-
-                <span className="text-sm font-semibold text-[#1877F2]">
-                  View all
-                </span>
-              </div>
-
-              <div className="space-y-3">
-                {[
-                  {
-                    title: "Social Media Promotion",
-                    category: "Marketing",
-                    amount: "GH₵50",
-                  },
-                  {
-                    title: "Website Testing",
-                    category: "Technology",
-                    amount: "GH₵80",
-                  },
-                  {
-                    title: "Content Review",
-                    category: "Writing",
-                    amount: "GH₵35",
-                  },
-                ].map((task) => (
-                  <div
-                    key={task.title}
-                    className="flex items-center justify-between rounded-xl border border-slate-100 p-4"
-                  >
-                    <div>
-                      <p className="font-semibold text-[#050505]">
-                        {task.title}
-                      </p>
-
-                      <p className="mt-1 text-xs text-[#65676B]">
-                        {task.category}
-                      </p>
-                    </div>
-
-                    <p className="font-bold text-[#1877F2]">
-                      {task.amount}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Completed indicator */}
-            <div className="mt-5 flex items-center gap-3 rounded-xl bg-green-50 p-4">
-              <CheckCircle2 size={20} className="text-[#31A24C]" />
-
-              <div>
-                <p className="text-sm font-bold text-[#050505]">
-                  12 tasks completed
-                </p>
-
-                <p className="text-xs text-[#65676B]">
-                  Keep going — you're doing great.
-                </p>
+                  <p className="mt-1 text-sm leading-6 text-[#65676B]">
+                    Post tasks and find available workers.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Floating earnings */}
-          <div className="absolute -bottom-5 -right-5 hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-xl sm:block">
-            <p className="text-xs text-[#65676B]">Earned this week</p>
-            <p className="mt-1 text-xl font-black text-[#31A24C]">
-              +GH₵320
-            </p>
+          {/* RIGHT — PRODUCT PREVIEW */}
+          <div className="relative lg:pl-4">
+
+            {/* Small floating label */}
+            <div className="absolute -left-3 top-8 z-10 hidden items-center gap-3 border border-slate-200 bg-white px-4 py-3 shadow-lg sm:flex">
+              <div className="flex h-9 w-9 items-center justify-center bg-[#E7F3FF]">
+                <Wallet size={18} className="text-[#1877F2]" />
+              </div>
+
+              <div>
+                <p className="text-xs text-[#65676B]">Worker dashboard</p>
+                <p className="text-sm font-semibold text-[#050505]">
+                  Track your work
+                </p>
+              </div>
+            </div>
+
+            {/* Product preview */}
+            <div className="border border-slate-300 bg-white shadow-[0_24px_60px_-35px_rgba(0,0,0,0.35)]">
+
+              {/* Preview header */}
+              <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4 sm:px-6">
+                <div>
+                  <p className="text-xs font-medium text-[#65676B]">
+                    Worker dashboard
+                  </p>
+
+                  <h2 className="mt-1 text-lg font-bold text-[#050505]">
+                    Available opportunities
+                  </h2>
+                </div>
+
+                <div className="hidden text-right sm:block">
+                  <p className="text-xs text-[#65676B]">Account</p>
+                  <p className="text-sm font-semibold text-[#050505]">
+                    Worker
+                  </p>
+                </div>
+              </div>
+
+              {/* Search */}
+              <div className="border-b border-slate-200 px-5 py-4 sm:px-6">
+                <div className="border border-slate-200 bg-[#F7F8FA] px-4 py-3 text-sm text-[#65676B]">
+                  Search for tasks...
+                </div>
+              </div>
+
+              {/* Task list */}
+              <div className="px-5 py-5 sm:px-6">
+                <div className="mb-4 flex items-end justify-between">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-[#1877F2]">
+                      Opportunities
+                    </p>
+
+                    <h3 className="mt-1 text-base font-bold text-[#050505]">
+                      Available tasks
+                    </h3>
+                  </div>
+
+                  <span className="text-xs text-[#65676B]">
+                    Browse tasks
+                  </span>
+                </div>
+
+                <div className="space-y-3">
+                  {tasks.map((task) => (
+                    <div
+                      key={task.title}
+                      className="group border border-slate-200 bg-white p-4 transition-colors hover:border-[#1877F2]"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="min-w-0">
+                          <p className="font-semibold text-[#050505]">
+                            {task.title}
+                          </p>
+
+                          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[#65676B]">
+                            <span>{task.category}</span>
+
+                            <span className="flex items-center gap-1">
+                              <MapPin size={13} />
+                              {task.location}
+                            </span>
+                          </div>
+                        </div>
+
+                        <p className="shrink-0 font-bold text-[#1877F2]">
+                          {task.amount}
+                        </p>
+                      </div>
+
+                      <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
+                        <span className="text-xs text-[#65676B]">
+                          Task opportunity
+                        </span>
+
+                        <span className="text-xs font-semibold text-[#1877F2] transition-transform group-hover:translate-x-1">
+                          View task →
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Preview footer */}
+              <div className="border-t border-slate-200 bg-[#F7F8FA] px-5 py-4 sm:px-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-[#65676B]">
+                      EarnConnect
+                    </p>
+
+                    <p className="mt-1 text-sm font-semibold text-[#050505]">
+                      Find work. Get things done.
+                    </p>
+                  </div>
+
+                  <Link
+                    href="/auth/register"
+                    className="text-sm font-semibold text-[#1877F2] hover:text-[#166FE5]"
+                  >
+                    Join →
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Lower offset detail */}
+            <div className="mt-4 ml-auto flex max-w-sm items-center gap-3 border-l-2 border-[#1877F2] pl-4">
+              <p className="text-sm leading-6 text-[#65676B]">
+                A simple marketplace connecting skills with task-based
+                opportunities.
+              </p>
+            </div>
           </div>
         </div>
       </div>

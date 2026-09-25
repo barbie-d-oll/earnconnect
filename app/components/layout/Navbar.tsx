@@ -13,25 +13,25 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
-      <nav className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-10">
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white">
+      <nav className="mx-auto flex h-[68px] w-full max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
 
         {/* Logo */}
         <Link
-          href="/auth/login"
-          className="text-2xl font-extrabold tracking-tight"
+          href="/"
+          className="text-[23px] font-extrabold tracking-tight"
         >
           <span className="text-[#1877F2]">Earn</span>
           <span className="text-[#050505]">Connect</span>
         </Link>
 
-        {/* Desktop links */}
-        <div className="hidden items-center gap-8 lg:flex">
+        {/* Desktop navigation */}
+        <div className="hidden items-center gap-9 lg:flex">
           {links.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="text-sm font-medium text-[#65676B] transition hover:text-[#1877F2]"
+              className="relative text-sm font-medium text-[#65676B] transition-colors hover:text-[#050505]"
             >
               {link.label}
             </Link>
@@ -39,64 +39,67 @@ export default function Navbar() {
         </div>
 
         {/* Desktop actions */}
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-5 lg:flex">
           <Link
             href="/auth/login"
-            className="rounded-lg px-5 py-2.5 text-sm font-semibold text-[#1877F2] transition hover:bg-[#E7F3FF]"
+            className="text-sm font-semibold text-[#050505] transition-colors hover:text-[#1877F2]"
           >
             Log In
           </Link>
 
           <Link
             href="/auth/register"
-            className="rounded-lg bg-[#1877F2] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#166FE5]"
+            className="bg-[#1877F2] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#166FE5]"
           >
             Get Started
           </Link>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile menu button */}
         <button
           type="button"
           onClick={() => setOpen(!open)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg text-[#050505] hover:bg-[#F0F2F5] lg:hidden"
-          aria-label="Toggle navigation"
+          className="flex h-9 w-9 items-center justify-center text-[#050505] transition-colors hover:text-[#1877F2] lg:hidden"
+          aria-label={open ? "Close navigation" : "Open navigation"}
+          aria-expanded={open}
         >
-          {open ? <X size={22} /> : <Menu size={22} />}
+          {open ? <X size={21} /> : <Menu size={21} />}
         </button>
       </nav>
 
       {/* Mobile navigation */}
       {open && (
-        <div className="border-t border-slate-200 bg-white px-6 py-5 lg:hidden">
-          <div className="mx-auto flex max-w-7xl flex-col gap-2">
-            {links.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-4 py-3 text-sm font-medium text-[#65676B] hover:bg-[#E7F3FF] hover:text-[#1877F2]"
-              >
-                {link.label}
-              </Link>
-            ))}
+        <div className="border-t border-slate-200 bg-white lg:hidden">
+          <div className="mx-auto max-w-7xl px-5 py-5 sm:px-8">
+            <div className="flex flex-col">
+              {links.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="border-b border-slate-100 py-4 text-sm font-medium text-[#65676B] transition-colors hover:text-[#1877F2]"
+                >
+                  {link.label}
+                </Link>
+              ))}
 
-            <div className="mt-3 flex flex-col gap-2 border-t border-slate-200 pt-4">
-              <Link
-                href="/auth/login"
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-4 py-3 text-center text-sm font-semibold text-[#1877F2] hover:bg-[#E7F3FF]"
-              >
-                Log In
-              </Link>
+              <div className="flex items-center gap-5 pt-5">
+                <Link
+                  href="/auth/login"
+                  onClick={() => setOpen(false)}
+                  className="text-sm font-semibold text-[#050505] hover:text-[#1877F2]"
+                >
+                  Log In
+                </Link>
 
-              <Link
-                href="/auth/register"
-                onClick={() => setOpen(false)}
-                className="rounded-lg bg-[#1877F2] px-4 py-3 text-center text-sm font-semibold text-white hover:bg-[#166FE5]"
-              >
-                Get Started
-              </Link>
+                <Link
+                  href="/auth/register"
+                  onClick={() => setOpen(false)}
+                  className="bg-[#1877F2] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#166FE5]"
+                >
+                  Get Started
+                </Link>
+              </div>
             </div>
           </div>
         </div>

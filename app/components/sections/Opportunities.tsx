@@ -1,8 +1,4 @@
-import {
-  ArrowRight,
-  BriefcaseBusiness,
-  CheckCircle2,
-} from "lucide-react";
+import { ArrowUpRight, BriefcaseBusiness, MapPin } from "lucide-react";
 import Link from "next/link";
 
 const opportunities = [
@@ -11,6 +7,7 @@ const opportunities = [
     category: "Marketing",
     description:
       "Help brands promote their products and services across social platforms.",
+    location: "Remote",
     reward: "GH₵50",
   },
   {
@@ -18,6 +15,7 @@ const opportunities = [
     category: "Technology",
     description:
       "Test websites and digital products and share useful feedback with businesses.",
+    location: "Remote",
     reward: "GH₵80",
   },
   {
@@ -25,6 +23,7 @@ const opportunities = [
     category: "Writing",
     description:
       "Review and improve digital content while helping businesses maintain quality.",
+    location: "Accra",
     reward: "GH₵35",
   },
 ];
@@ -33,93 +32,110 @@ export default function Opportunities() {
   return (
     <section
       id="opportunities"
-      className="bg-white px-6 py-20 sm:px-8 lg:px-10 lg:py-24"
+      className="border-b border-slate-200 bg-[#F0F2F5] px-6 py-20 sm:px-8 lg:px-10 lg:py-24"
     >
       <div className="mx-auto max-w-7xl">
-        {/* Section heading */}
-        <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+
+        {/* Heading */}
+        <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
           <div className="max-w-2xl">
-            <p className="text-sm font-bold uppercase tracking-wider text-[#1877F2]">
-              Featured opportunities
+            <p className="text-sm font-semibold text-[#1877F2]">
+              Opportunities
             </p>
 
-            <h2 className="mt-3 text-3xl font-black tracking-tight text-[#050505] sm:text-4xl">
-              Find work that fits your skills
+            <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight text-[#050505] sm:text-4xl">
+              Work that matches what you can do.
             </h2>
 
-            <p className="mt-4 text-lg leading-7 text-[#65676B]">
-              Explore opportunities from employers looking for people with
-              skills like yours.
+            <p className="mt-4 max-w-xl text-base leading-7 text-[#65676B]">
+              Explore different types of tasks and connect with employers
+              looking for people with the right skills.
             </p>
           </div>
 
           <Link
             href="/opportunities"
-            className="inline-flex items-center gap-2 text-sm font-bold text-[#1877F2] hover:text-[#166FE5]"
+            className="group inline-flex items-center gap-2 text-sm font-semibold text-[#1877F2] transition-colors hover:text-[#166FE5]"
           >
-            View all opportunities
-            <ArrowRight size={17} />
+            Browse opportunities
+            <ArrowUpRight
+              size={17}
+              className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
           </Link>
         </div>
 
-        {/* Opportunity cards */}
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
-          {opportunities.map((opportunity) => (
+        {/* Opportunity list */}
+        <div className="mt-14 border-t border-slate-300">
+          {opportunities.map((opportunity, index) => (
             <article
               key={opportunity.title}
-              className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-blue-100 hover:shadow-lg"
+              className="group grid gap-6 border-b border-slate-300 py-7 transition-colors hover:bg-white/60 md:grid-cols-[64px_1fr_220px_auto] md:items-center md:gap-8"
             >
-              {/* Top */}
-              <div className="flex items-start justify-between">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E7F3FF]">
+              {/* Number */}
+              <span className="text-sm font-semibold text-[#1877F2]">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+
+              {/* Main information */}
+              <div>
+                <div className="flex items-center gap-3">
                   <BriefcaseBusiness
-                    size={20}
+                    size={19}
+                    strokeWidth={1.8}
                     className="text-[#1877F2]"
                   />
+
+                  <h3 className="text-lg font-semibold text-[#050505]">
+                    {opportunity.title}
+                  </h3>
                 </div>
 
-                <span className="rounded-full bg-[#E7F3FF] px-3 py-1 text-xs font-semibold text-[#1877F2]">
+                <p className="mt-2 max-w-xl text-sm leading-6 text-[#65676B]">
+                  {opportunity.description}
+                </p>
+              </div>
+
+              {/* Details */}
+              <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#65676B]">
+                <span className="font-medium text-[#050505]">
                   {opportunity.category}
+                </span>
+
+                <span className="flex items-center gap-1.5">
+                  <MapPin size={14} />
+                  {opportunity.location}
                 </span>
               </div>
 
-              {/* Content */}
-              <h3 className="mt-6 text-xl font-bold text-[#050505]">
-                {opportunity.title}
-              </h3>
-
-              <p className="mt-3 min-h-[72px] leading-6 text-[#65676B]">
-                {opportunity.description}
-              </p>
-
-              {/* Reward */}
-              <div className="mt-6 flex items-end justify-between border-t border-slate-100 pt-5">
-                <div>
+              {/* Reward + action */}
+              <div className="flex items-center justify-between gap-6 md:justify-end">
+                <div className="text-left md:text-right">
                   <p className="text-xs text-[#65676B]">
-                    Estimated reward
+                    Reward
                   </p>
 
-                  <p className="mt-1 text-2xl font-black text-[#050505]">
+                  <p className="mt-1 text-lg font-bold text-[#050505]">
                     {opportunity.reward}
                   </p>
                 </div>
 
                 <Link
                   href="/opportunities"
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1877F2] text-white transition group-hover:bg-[#166FE5]"
+                  className="flex h-9 w-9 items-center justify-center text-[#1877F2] transition-transform duration-200 group-hover:translate-x-1"
                   aria-label={`View ${opportunity.title}`}
                 >
-                  <ArrowRight size={18} />
+                  <ArrowUpRight size={19} />
                 </Link>
-              </div>
-
-              {/* Trust indicator */}
-              <div className="mt-4 flex items-center gap-2 text-xs text-[#31A24C]">
-                <CheckCircle2 size={15} />
-                Verified opportunity
               </div>
             </article>
           ))}
+        </div>
+
+        {/* Bottom note */}
+        <div className="mt-8 flex items-center gap-3 text-sm text-[#65676B]">
+          <span className="h-2 w-2 bg-[#1877F2]" />
+          More opportunities can be explored after creating an account.
         </div>
       </div>
     </section>

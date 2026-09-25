@@ -1,143 +1,199 @@
 import Link from "next/link";
+import { UserRound } from "lucide-react";
 
 export default function Footer() {
   return (
     <footer className="border-t border-slate-200 bg-white">
-      <div className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 lg:px-10">
-        <div className="grid gap-10 md:grid-cols-4">
-
+      <div className="mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 lg:px-10">
+        {/* Main footer */}
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr_1.35fr] lg:gap-10">
+          
           {/* Brand */}
-          <div className="md:col-span-2">
-            <Link
-              href="/"
-              className="text-2xl font-black tracking-tight text-blue-600"
-            >
-              Earn<span className="text-slate-950">Connect</span>
+          <div>
+            <Link href="/" className="inline-flex items-center gap-4">
+              <span className="flex h-12 w-12 items-center justify-center bg-[#1877F2] text-white shadow-[0_8px_20px_rgba(24,119,242,0.18)]">
+                <UserRound size={24} strokeWidth={2} />
+              </span>
+
+              <span className="text-xl font-bold tracking-tight text-[#050505]">
+                Earn<span className="text-[#1877F2]">Connect</span>
+              </span>
             </Link>
 
-            <p className="mt-4 max-w-md text-sm leading-6 text-slate-500">
-              Connect with opportunities, discover flexible work, and build
-              your income with EarnConnect.
+            <p className="mt-5 max-w-sm text-[15px] leading-7 text-[#65676B]">
+              A task marketplace connecting workers with employers and
+              opportunities that match their skills.
             </p>
-
-            <div className="mt-6 flex gap-3">
-              <Link
-                href="/auth/register"
-                className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700"
-              >
-                Get Started
-              </Link>
-
-              <Link
-                href="/auth/login"
-                className="rounded-lg border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-              >
-                Log In
-              </Link>
-            </div>
           </div>
 
-          {/* Platform */}
+          {/* Product */}
           <div>
-            <h3 className="text-sm font-bold text-slate-950">
-              Platform
+            <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-[#65676B]">
+              Product
             </h3>
 
-            <div className="mt-4 flex flex-col gap-3 text-sm text-slate-500">
+            <div className="mt-6 flex flex-col gap-4 text-[15px] text-[#65676B]">
               <Link
-                href="/#how-it-works"
-                className="transition hover:text-blue-600"
+                href="/"
+                className="transition-colors hover:text-[#1877F2]"
               >
-                How It Works
+                Home
               </Link>
 
               <Link
                 href="/#opportunities"
-                className="transition hover:text-blue-600"
+                className="transition-colors hover:text-[#1877F2]"
               >
                 Opportunities
               </Link>
 
               <Link
-                href="/auth/register"
-                className="transition hover:text-blue-600"
+                href="/auth/login"
+                className="transition-colors hover:text-[#1877F2]"
               >
-                Find Work
+                Sign in
               </Link>
 
               <Link
                 href="/auth/register"
-                className="transition hover:text-blue-600"
+                className="transition-colors hover:text-[#1877F2]"
               >
-                Post a Job
+                Get started
               </Link>
             </div>
           </div>
 
-          {/* Account */}
+          {/* Company */}
           <div>
-            <h3 className="text-sm font-bold text-slate-950">
-              Account
+            <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-[#65676B]">
+              Company
             </h3>
 
-            <div className="mt-4 flex flex-col gap-3 text-sm text-slate-500">
+            <div className="mt-6 flex flex-col gap-4 text-[15px] text-[#65676B]">
               <Link
-                href="/auth/login"
-                className="transition hover:text-blue-600"
+                href="/"
+                className="transition-colors hover:text-[#1877F2]"
               >
-                Log In
+                About
               </Link>
 
               <Link
-                href="/auth/register"
-                className="transition hover:text-blue-600"
+                href="/"
+                className="transition-colors hover:text-[#1877F2]"
               >
-                Create Account
+                Contact
               </Link>
 
               <Link
-                href="/auth/register?role=WORKER"
-                className="transition hover:text-blue-600"
+                href="/"
+                className="transition-colors hover:text-[#1877F2]"
               >
-                Join as Worker
+                FAQ
+              </Link>
+            </div>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-[#65676B]">
+              Legal
+            </h3>
+
+            <div className="mt-6 flex flex-col gap-4 text-[15px] text-[#65676B]">
+              <Link
+                href="/"
+                className="transition-colors hover:text-[#1877F2]"
+              >
+                Privacy Policy
               </Link>
 
               <Link
-                href="/auth/register?role=EMPLOYER"
-                className="transition hover:text-blue-600"
+                href="/"
+                className="transition-colors hover:text-[#1877F2]"
               >
-                Join as Employer
+                Terms of Service
               </Link>
+
+              <Link
+                href="/"
+                className="transition-colors hover:text-[#1877F2]"
+              >
+                Refund Policy
+              </Link>
+
+              <Link
+                href="/"
+                className="transition-colors hover:text-[#1877F2]"
+              >
+                Security
+              </Link>
+            </div>
+          </div>
+
+          {/* Get in touch */}
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-[#65676B]">
+              Get in touch
+            </h3>
+
+            <div className="mt-6 flex flex-col gap-4 text-[15px] leading-6 text-[#65676B]">
+              <a
+                href="mailto:support@earnconnect.app"
+                className="transition-colors hover:text-[#1877F2]"
+              >
+                support@earnconnect.app
+              </a>
+
+              <a
+                href="mailto:hello@earnconnect.app"
+                className="transition-colors hover:text-[#1877F2]"
+              >
+                hello@earnconnect.app
+              </a>
+
+              <p>[Your Phone Number]</p>
+
+              <p>
+                [Business Address]
+                <br />
+                [City, Region]
+                <br />
+                Ghana
+              </p>
             </div>
           </div>
         </div>
 
         {/* Bottom */}
-        <div className="mt-10 flex flex-col gap-3 border-t border-slate-100 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-4 border-t border-slate-200 pt-7 text-sm text-[#65676B] sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} EarnConnect. All rights reserved.
           </p>
 
-          <div className="flex gap-5">
+          <div className="flex items-center gap-4">
             <Link
               href="/"
-              className="transition hover:text-blue-600"
+              className="transition-colors hover:text-[#1877F2]"
             >
-              Home
+              Privacy
             </Link>
 
-            <Link
-              href="/auth/login"
-              className="transition hover:text-blue-600"
-            >
-              Login
-            </Link>
+            <span className="text-slate-300">·</span>
 
             <Link
-              href="/auth/register"
-              className="transition hover:text-blue-600"
+              href="/"
+              className="transition-colors hover:text-[#1877F2]"
             >
-              Register
+              Terms
+            </Link>
+
+            <span className="text-slate-300">·</span>
+
+            <Link
+              href="/"
+              className="transition-colors hover:text-[#1877F2]"
+            >
+              Security
             </Link>
           </div>
         </div>

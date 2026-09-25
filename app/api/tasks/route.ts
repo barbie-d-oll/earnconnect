@@ -1,8 +1,67 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
+import { getSession } from "@/app/lib/session";
 
+// GET employer's tasks
+export async function GET() {
+  try {
+    const session = await getSession();
+
+    if (!session.isLoggedIn || !session.userId) {
+      return NextResponse.json(
+        { message: "You must be logged in." },
+        { status: 401 }
+      );
+    }
+
+    if (session.role !== "EMPLOYER") {
+      return NextResponse.json(
+        { message: "Only employers can view employer tasks." },
+        { status: 403 }
+      );
+    }
+
+    const tasks = await prisma.task.findMany({
+      where: {
+        employerId: session.userId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return NextResponse.json({
+      tasks,
+    });
+  } catch (error) {
+    console.error("Get employer tasks error:", error);
+
+    return NextResponse.json(
+      { message: "Failed to load tasks." },
+      { status: 500 }
+    );
+  }
+}
+
+// CREATE task
 export async function POST(request: NextRequest) {
   try {
+    const session = await getSession();
+
+    if (!session.isLoggedIn || !session.userId) {
+      return NextResponse.json(
+        { message: "You must be logged in." },
+        { status: 401 }
+      );
+    }
+
+    if (session.role !== "EMPLOYER") {
+      return NextResponse.json(
+        { message: "Only employers can create tasks." },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
 
     const {
@@ -12,7 +71,7 @@ export async function POST(request: NextRequest) {
       location,
       payment,
       deadline,
-      employerId,
+      imageUrl,
       publish,
     } = body;
 
@@ -21,8 +80,7 @@ export async function POST(request: NextRequest) {
       !description ||
       !category ||
       !payment ||
-      !deadline ||
-      !employerId
+      !deadline
     ) {
       return NextResponse.json(
         { message: "Please complete all required fields." },
@@ -30,9 +88,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (publish && !imageUrl) {
+      return NextResponse.json(
+        {
+          message:
+            "Please upload an image for the task before publishing.",
+        },
+        { status: 400 }
+      );
+    }
+
     const employer = await prisma.user.findUnique({
       where: {
-        id: employerId,
+        id: session.userId,
       },
     });
 
@@ -58,7 +126,8 @@ export async function POST(request: NextRequest) {
         location: location?.trim() || null,
         payment: Number(payment),
         deadline: new Date(deadline),
-        employerId,
+        imageUrl: imageUrl || null,
+        employerId: session.userId,
         status: publish ? "PUBLISHED" : "DRAFT",
       },
     });

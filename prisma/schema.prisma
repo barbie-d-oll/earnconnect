@@ -16,6 +16,54 @@ model User {
   status       UserStatus @default(ACTIVE)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
+
+  tasks        Task[]
+  complaints   Complaint[]
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  title       String
+  description String     @db.Text
+  category    String
+  location    String?
+  payment     Float
+  deadline    DateTime
+  imageUrl    String?
+  status      TaskStatus @default(DRAFT)
+
+  employerId  String
+  employer    User       @relation(fields: [employerId], references: [id], onDelete: Cascade)
+
+  complaints  Complaint[]
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([employerId])
+  @@index([status])
+  @@index([deadline])
+}
+
+model Complaint {
+  id          String          @id @default(cuid())
+  description String          @db.Text
+  type        ComplaintType
+  status      ComplaintStatus @default(PENDING)
+
+  reporterId  String
+  taskId      String?
+  evidenceUrl String?
+
+  reporter    User            @relation(fields: [reporterId], references: [id], onDelete: Cascade)
+  task        Task?           @relation(fields: [taskId], references: [id], onDelete: SetNull)
+
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@index([reporterId])
+  @@index([taskId])
+  @@index([status])
 }
 
 enum Role {
@@ -27,4 +75,27 @@ enum Role {
 enum UserStatus {
   ACTIVE
   SUSPENDED
+}
+
+enum TaskStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum ComplaintType {
+  PAYMENT
+  TASK_PROBLEM
+  WORKER_BEHAVIOR
+  EMPLOYER_BEHAVIOR
+  SAFETY
+  NON_COMPLETION
+  MISLEADING_TASK
+  OTHER
+}
+
+enum ComplaintStatus {
+  PENDING
+  UNDER_REVIEW
+  RESOLVED
+  REJECTED
 }
